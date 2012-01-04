@@ -69,7 +69,7 @@ my @compile_args = (
     "-fno-exceptions",
     "-fno-short-enums", # See www for why we added this
     "-ffunction-sections",
-    "-funwind-tables", # static exception-like tables
+    "-fno-unwind-tables", # static exception-like tables
     "-fstack-protector", # check guard variable before return
     "-fmessage-length=0"); # No line length limit to error messages
 
@@ -97,7 +97,8 @@ my @link_args = (
     "-nostdlib",
     "$ALIB/crtend_android.o",
     "$ALIB/crtbegin_dynamic.o",
-    "$GCC/../lib/gcc/arm-linux-androideabi/4.4.3/armv7-a/libgcc.a",
+    "-L$GCC/../lib/gcc/arm-linux-androideabi/4.4.3/armv7-a",
+    "-lgcc",
     "-lc",
     "-lm");
 
@@ -108,11 +109,14 @@ my @shared_args = (
     "-Wl,--gc-sections",
     "-Wl,-shared,-Bsymbolic",
     "-L$ALIB",
+    "$ALIB/crtend_so.o",
+    "$ALIB/crtbegin_so.o",
     "-Wl,--no-whole-archive",
     "-lc",
     "-lm",
     "-Wl,--no-undefined",
-    "$GCC/../lib/gcc/arm-linux-androideabi/4.4.3/armv7-a/libgcc.a",
+    "-L$GCC/../lib/gcc/arm-linux-androideabi/4.4.3/armv7-a",
+    "-lgcc",
     "-Wl,--whole-archive"); # .a, .o input files go *after* here
 
 # Now implement a quick parser for a gcc-like command line

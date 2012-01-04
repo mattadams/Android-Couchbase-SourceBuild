@@ -30,6 +30,7 @@ ERLC=$ERL_HOME/bootstrap/bin/erlc \
 CXX=agcc \
 CXXFLAGS="-fno-rtti -fno-exceptions -I$COUCH_ANDROID_HOME/build/deps/otp_rel/usr/include -I$ANDROID_NDK_ROOT/sources/cxx-stl/stlport/stlport/" \
 CFLAGS="-I$ERL_HOME/erts/emulator/beam/ -I$ERL_HOME/erts/include/arm-unknown-eabi/" \
+LIBS="-lgcc" \
 CC=agcc \
 ./configure \
 --with-ejson-compare=no \
@@ -38,6 +39,11 @@ CC=agcc \
 --with-erlang=$COUCH_ANDROID_HOME/build/deps/otp_rel/usr/include \
 --with-js-include=$COUCH_ANDROID_HOME/build/deps/mozilla-current/mozilla-central/js/src/dist/include \
 --with-js-lib="$COUCH_ANDROID_HOME/build/deps/mozilla-current/mozilla-central/js/src"
+
+if [[ $? -ne 0 ]]; then
+	echo "configure failed"
+	exit 1
+fi
 
 export ERL_LIBS=$ERL_HOME/lib
 make -s

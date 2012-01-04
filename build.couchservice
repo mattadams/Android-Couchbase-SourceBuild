@@ -24,10 +24,10 @@ cd $COUCHBASE_SERVICE_HOME
 touch local.properties
 
 # build our jni code
-ant -Dsdk.dir=$ANDROID_SDK_ROOT -Dndk.dir=$ANDROID_NDK_ROOT jni
+ant -v -Dsdk.dir=$ANDROID_SDK_ROOT -Dndk.dir=$ANDROID_NDK_ROOT jni
 
 # build couchbase.jar
-ant -Dsdk.dir=$ANDROID_SDK_ROOT -Dndk.dir=$ANDROID_NDK_ROOT -Dextensible.libs.classpath=$ERL_HOME/lib/jinterface/priv/ -Dversion=$1 couchbase-jar
+ant -v -Dsdk.dir=$ANDROID_SDK_ROOT -Dndk.dir=$ANDROID_NDK_ROOT -Dextensible.libs.classpath=$ERL_HOME/lib/jinterface/priv/ -Dversion=$1 couchbase-jar
 
 # build couchbase scripts
-ant -Dsdk.dir=$ANDROID_SDK_ROOT -Dversion=$1 -Dotp.version=$2 couchbase-script
+ant -v -Dsdk.dir=$ANDROID_SDK_ROOT -Dversion=$1 -Dotp.version=$2 couchbase-script
